@@ -2,9 +2,9 @@ import random
 
 class alg_gen:
 
-    def __init__(self, dados, tamPopulacao = 10, limGeracoes = 50, probMutacao=5, funcaoFitness = None, maiorFitness = True):
+    def __init__(self, saida, tamPopulacao = 10, limGeracoes = 50, probMutacao=5, funcaoFitness = None, maiorFitness = True):
         #Atributos adicionados
-        self.dados = dados
+        self.saida = saida
         self.tamPopulacao = tamPopulacao
         self.limGeracoes = limGeracoes
         self.funcaoFitness = funcaoFitness
@@ -43,8 +43,8 @@ class alg_gen:
                 if (probMut2 <= self.probMutacao): genes2 = self.funMutacao(genes2)
 
                 #Adiciona filho 1 e filho 2
-                novaPopulacao.append({'genes': genes1, 'fitness': self.funcaoFitness(genes1, self.dados)})
-                novaPopulacao.append({'genes': genes2, 'fitness': self.funcaoFitness(genes2, self.dados) })
+                novaPopulacao.append({'genes': genes1, 'fitness': self.funcaoFitness(genes1, self.saida)})
+                novaPopulacao.append({'genes': genes2, 'fitness': self.funcaoFitness(genes2, self.saida) })
             
             #Junta e faz a eliminação dos mais fracos
             self.populacao += novaPopulacao
@@ -55,15 +55,15 @@ class alg_gen:
     def criaPopulacaoInicial(self):
         """ Cria a primeira população """
         for _ in range(self.tamPopulacao):
-            cromossomo = {'fitness': 0, 'genes': self.funCriaIndividuo(self.dados)}
-            cromossomo['fitness'] = self.funcaoFitness(cromossomo['genes'], self.dados)
+            cromossomo = {'fitness': 0, 'genes': self.funCriaIndividuo(self.saida)}
+            cromossomo['fitness'] = self.funcaoFitness(cromossomo['genes'], self.saida)
             self.populacao.append(cromossomo)
             
 
-    def criaIndividuo(self, dados):
+    def criaIndividuo(self, saida):
         """ Cria um novo individuo """
         gene = []
-        for _ in range(len(dados)):
+        for _ in range(len(saida)):
             gene.append(random.randint(0,1))
         return gene
 
